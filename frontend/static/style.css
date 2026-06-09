@@ -1,0 +1,384 @@
+/* Base Layout Properties & Theme variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root {
+    --bg-darker: #0b1322;
+    --bg-dark: #0e1726;
+    --bg-card: #142137;
+    --bg-input: #1b2a47;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --accent-blue: #2563eb;
+    --accent-hover: #3b82f6;
+    --border-color: #263959;
+    --sidebar-width: 280px;
+}
+
+body {
+    background-color: var(--bg-darker);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR PANEL STYLES --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-dark);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 20px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+/* Logic rule for handling the collapsible toggle script action */
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.logo h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+}
+
+.blue-text {
+    color: var(--accent-hover);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    width: 100%;
+}
+
+/* Style the native structural button tags used for menu options */
+.nav-item {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: #f1f5f9;
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: var(--bg-input);
+}
+
+.nav-item.active {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+/* User Profile Metadata section */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.user-status {
+    font-size: 0.75rem;
+    color: #eab308;
+    margin-top: 2px;
+}
+
+
+/* --- DASHBOARD VIEWPORT --- */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Readjust grid centering layout space if the menu collapses */
+.sidebar.collapsed + .main-content {
+    margin-left: 0;
+}
+
+#menu-btn {
+    align-self: flex-start;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.dashboard-card {
+    background-color: var(--bg-dark);
+    width: 100%;
+    max-width: 900px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.card-header h1 {
+    font-size: 2.2rem;
+    color: var(--accent-hover);
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+
+/* --- INTEGRATED FORM ELEMENT UI --- */
+.content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], 
+textarea, 
+select {
+    width: 100%;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 14px 16px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+input[type="text"]:focus, 
+textarea:focus, 
+select:focus {
+    border-color: var(--accent-hover);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.separator {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 5px 0;
+}
+
+.file-wrapper {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: 6px;
+}
+
+.input-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Action button configurations */
+.btn-submit {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: var(--accent-hover);
+}
+
+.loader-alert {
+    margin-top: 15px;
+    color: #eab308;
+    font-weight: 600;
+}
+
+
+/* --- RESPONSE OUTPUTS & HISTORY SLOTS --- */
+.result {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.result h2 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+
+pre {
+    background-color: var(--bg-darker);
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+    color: #e2e8f0;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-dark);
+}
+
+.chat-section {
+    margin-top: 35px;
+}
+
+.chat-section h2 {
+    margin-bottom: 15px;
+}
+
+
+
+
+@media (max-width: 900px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.collapsed {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+/* --- THEME OVERRIDES (BLACK & DEEP VIOLET) --- */
+/* When body has the .dark class, we swap variables to a premium black & violet theme */
+body.dark {
+    --bg-darker: #05020a;   /* Pitch black with a hint of violet */
+    --bg-dark: #0d0614;     /* Deep midnight violet for card & sidebar */
+    --bg-card: #0d0614;
+    --bg-input: #1a0f29;    /* Rich dark violet for input fields */
+    --text-main: #f5f3f7;   /* Off-white text */
+    --text-muted: #a78bfa;  /* Soft lavender/violet for muted text */
+    --accent-blue: #7c3aed; /* True violet for active menu items and primary buttons */
+    --accent-hover: #a78bfa;/* Bright violet for titles and hover states */
+    --border-color: #2e164d;/* Rich violet borders */
+}
+
+/* Specific tweaks to polish the Black & Violet experience */
+body.dark .nav-item {
+    color: #cbd5e1;
+    border-color: var(--border-color);
+}
+
+body.dark .nav-item:not(.active):hover {
+    background-color: rgba(124, 58, 237, 0.15);
+    border-color: var(--accent-blue);
+}
+
+body.dark #menu-btn {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+body.dark pre {
+    background-color: #05020a;
+    color: #e9e3f0;
+    border: 1px solid var(--border-color);
+}
+
+body.dark .btn-secondary {
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+body.dark .btn-secondary:hover {
+    background-color: var(--bg-input);
+}

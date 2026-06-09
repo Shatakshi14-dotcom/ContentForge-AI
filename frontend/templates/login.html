@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ContentForge AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; padding: 20px;">
+
+    <div class="dashboard-card" style="max-width: 450px; width: 100%; padding: 40px 30px;">
+        <div class="card-header" style="justify-content: center;">
+            <h1>🚀 ContentForge <span class="blue-text">AI</span></h1>
+        </div>
+        <h3 style="text-align: center; margin-bottom: 25px;">Welcome Back!</h3>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="loader-alert" style="margin-bottom: 15px; text-align: center;">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/login" method="POST" class="content-form">
+            <div class="form-group">
+                <label class="input-label">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <label class="input-label">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required 
+                       style="width: 100%; background-color: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 14px 16px; color: var(--text-main); font-size: 0.95rem; outline: none;">
+            </div>
+
+            <button type="submit" class="btn-submit" style="width: 100%; margin-top: 15px; text-align: center; display: block;">
+                Sign In
+            </button>
+        </form>
+
+        <p class="subtitle" style="text-align: center; margin-top: 25px; margin-bottom: 0;">
+            Don't have an account? <a href="/register" style="color: var(--accent-hover); text-decoration: none; font-weight: 600;">Register here</a>
+        </p>
+    </div>
+
+</body>
+</html>

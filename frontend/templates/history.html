@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - ContentForge AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">
+                <h2>🚀 ContentForge <span class="blue-text">AI</span></h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="/"><button class="nav-item">🏠 Home</button></a>
+                <a href="/history"><button class="nav-item active">📜 History</button></a>
+                <button class="nav-item" onclick="toggleTheme()">🌙 Dark Mode</button>
+                <a href="/profile"><button class="nav-item">👤 View Profile</button></a>
+                <a href="/logout"><button class="nav-item">🚪 Logout</button></a>
+            </nav>
+        </div>
+        <div class="user-profile">
+            <div class="avatar">👤</div>
+            <div class="user-info">
+                <span class="user-name">{{ username }} 👋</span>
+                <span class="user-status">Premium User 👑</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+        <button id="menu-btn" onclick="toggleSidebar()">☰ Toggle Menu</button>
+
+        <div class="dashboard-card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h1>📜 Generation History</h1>
+                
+                <!-- NEW: Delete / Clear History Form Action Button -->
+                {% if history_items %}
+                <form action="/delete-history" method="POST" style="margin: 0;" onsubmit="return confirm('Are you sure you want to permanently delete all history?');">
+                    <button type="submit" class="btn-submit" style="background-color: #ef4444; padding: 10px 18px; font-size: 0.9rem;">
+                        🗑️ Clear History
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+            
+            <p class="subtitle">Review your previously generated summaries, notes, and assistant prompts.</p>
+
+            <!-- Render History Loop dynamically matching your app.py structures -->
+            {% if history_items %}
+                {% for chat in history_items %}
+                <div class="result" style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 10px;">
+                        <b style="color: var(--accent-hover);">You:</b>
+                        <p style="margin-top: 4px; color: var(--text-main);">{{ chat.user }}</p>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <b style="color: #34d399;">AI Assistant Response:</b>
+                        <pre style="margin-top: 6px;">{{ chat.ai }}</pre>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="result" style="text-align: center; padding: 50px 20px; border-style: dashed;">
+                    <p class="subtitle" style="margin-bottom: 0; font-size: 1.1rem;">Your history index is empty.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+</div>
+
+<script>
+function toggleTheme() { document.body.classList.toggle("dark"); }
+function toggleSidebar() { document.getElementById("sidebar").classList.toggle("collapsed"); }
+</script>
+</body>
+</html>

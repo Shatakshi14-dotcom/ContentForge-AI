@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContentForge AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">
+                <h2>🚀 ContentForge <span class="blue-text">AI</span></h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="/">
+                    <button class="nav-item active">🏠 Home</button>
+                </a>
+                <a href="/history">
+                    <button class="nav-item">📜 History</button>
+                </a>
+                <button class="nav-item" onclick="toggleTheme()">
+                    🌙 Dark Mode
+                </button>
+                <a href="/logout">
+                    <button class="nav-item">🚪 Logout</button>
+                </a>
+            </nav>
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar">👤</div>
+            <div class="user-info">
+                <span class="user-name">{{ username if username else 'User Profile' }} 👋</span>
+                <span class="user-status">Premium User 👑</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <button id="menu-btn" onclick="toggleSidebar()">☰ Toggle Menu</button>
+
+        <div class="dashboard-card">
+            
+            <div class="card-header">
+                <h1>🚀 ContentForge AI</h1>
+            </div>
+            
+            <h3>Welcome, {{ username }} 👋</h3>
+            
+            <p class="subtitle">
+                Transform YouTube videos, PDFs and text into summaries,
+                notes, tweets, LinkedIn posts and blogs.
+            </p>
+
+            <form action="/summarize" method="POST" enctype="multipart/form-data" class="content-form">
+
+                <div class="form-group">
+                    <input type="text" name="url" placeholder="Paste YouTube URL...">
+                </div>
+
+                <div class="separator">OR Upload PDF</div>
+
+                <div class="form-group file-wrapper">
+                    <input type="file" name="pdf_file" accept=".pdf,.docx">
+                </div>
+
+                <div class="separator">OR Paste Text</div>
+
+                <div class="form-group">
+                    <textarea name="raw_text" rows="8" placeholder="Paste any text here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label">Ask a Question About the Content</label>
+                    <input type="text" name="question" placeholder="Example: Explain chapter 2">
+                </div>
+
+                <div class="form-group">
+                    <select name="mode">
+                        <option value="summary">Summary</option>
+                        <option value="notes">Study Notes</option>
+                        <option value="tweets">Twitter Posts</option>
+                        <option value="linkedin">LinkedIn Posts</option>
+                        <option value="blog">Blog Article</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="generateBtn" class="btn-submit">
+                    Generate Content
+                </button>
+
+            </form>
+
+            <div id="loader" style="display:none;" class="loader-alert">
+                ⏳ Generating...
+            </div>
+
+            {% if summary %}
+            <div class="result">
+                <h2>✨ Generated Content</h2>
+                <pre id="output">{{ summary }}</pre>
+                
+                <div class="result-actions">
+                    <button type="button" class="btn-secondary" onclick="copyText()">Copy</button>
+                    <button type="button" class="btn-secondary" onclick="toggleTheme()">🌙 Dark Mode</button>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </main>
+
+</div>
+
+<script>
+document.querySelector("form").addEventListener("submit", () => {
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("generateBtn").innerText = "Generating...";
+});
+
+function copyText() {
+    navigator.clipboard.writeText(
+        document.getElementById("output").innerText
+    );
+    alert("Copied!");
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+}
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+}
+</script>
+
+</body>
+</html>

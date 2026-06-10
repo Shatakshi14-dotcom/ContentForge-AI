@@ -1,6 +1,7 @@
-.env
 venv/
-uploads/
+.env
 __pycache__/
+uploads/
+*.db
 output.pdf
-contentforge.db
+summary.txt

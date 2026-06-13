@@ -1,9 +1,9 @@
-from flask import session, redirect
+from flask import Flask, render_template, request, redirect, session, send_file
+
 from werkzeug.security import (
     generate_password_hash,
     check_password_hash
 )
-from flask import Flask, render_template, request, send_file
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import (
     TranscriptsDisabled,
@@ -23,13 +23,16 @@ import pytesseract
 from PIL import Image
 import google.generativeai as genai
 import os
-from flask import redirect
+
+import init_db
 chat_history = []
 app = Flask(
     __name__,
     template_folder="../frontend/templates",
     static_folder="../frontend/static"
+   
 )
+
 
 
 UPLOAD_FOLDER = "uploads"
@@ -66,6 +69,16 @@ def get_video_id(url):
 
     return None
 
+@app.route("/profile")
+def profile():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    return render_template(
+        "profile.html",
+        username=session["username"]
+    )
 
 @app.route("/")
 def home():
@@ -314,14 +327,16 @@ def download_pdf():
     )
 @app.route("/history")
 def history():
+     if "user_id" not in session:
+        return redirect("/login")
 
-    search = request.args.get("search", "")
+     search = request.args.get("search", "")
 
-    conn = sqlite3.connect("contentforge.db")
+     conn = sqlite3.connect("contentforge.db")
 
-    cursor = conn.cursor()
+     cursor = conn.cursor()
 
-    if search:
+     if search:
 
         cursor.execute(
             """
@@ -332,36 +347,27 @@ def history():
             (f"%{search}%", f"%{search}%")
         )
 
-    else:
+     else:
 
         cursor.execute(
             "SELECT * FROM history ORDER BY id DESC"
         )
 
-    records = cursor.fetchall()
+     records = cursor.fetchall()
 
-    conn.close()
+     conn.close()
 
-    return render_template(
+     return render_template(
         "history.html",
         history=records,
         search=search
     )
 
-    cursor.execute(
-        "SELECT * FROM history ORDER BY id DESC"
-    )
-
-    records = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "history.html",
-        history=records
-    )
+    
 @app.route("/delete/<int:id>")
 def delete_history(id):
+    if "user_id" not in session:
+        return redirect("/login")
 
     conn = sqlite3.connect("contentforge.db")
 
@@ -380,7 +386,7 @@ def delete_history(id):
 def register():
 
     if request.method == "POST":
-
+        
         username = request.form["username"]
         password = request.form["password"]
 

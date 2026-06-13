@@ -1,4 +1,4 @@
-```python
+
 import os
 from urllib.parse import urlparse, parse_qs
 
@@ -145,4 +145,4 @@ except Exception as e:
 
     print("\nUnexpected error:")
     print(e)
-```
+
